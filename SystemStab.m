@@ -17,12 +17,13 @@ Stab = zeros(N1, N2);
 
 a = linspace(1, 10, N1);
 e = linspace(0, 0.5, N2);
+m = 1;
 
 parpool(Ncores);
 
 parfor (i = 1 : N1, Ncores)
-    Stabcase = zeros(1, N2);
-    for j = 1 : N2
+    Stabcase = zeros(1, length(e));
+    for j = 1 : length(e)
         
         Stabcase(j) = SingleIntegration(Target, a(i), e(j), m);
     

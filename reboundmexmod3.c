@@ -33,7 +33,7 @@
 #define	DY_OUT	plhs[2]
 
 void heartbeat(struct reb_simulation* r);
-int stabilitycheck(struct reb_simulation* r, double intdist1, double intdist2);
+int stabilitycheck(struct reb_simulation* r);
 int i, N, counter, nout;
 double *ts, *t, *y, *dy;
 double timer;
