@@ -77,8 +77,10 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] ){
     mus = mxGetPr(MUS);
 
     if (ts[2] < ts[0]){ ts[2] = ts[0]; }
+
     counter = 0;
     double tmp = ts[2]/ts[3];
+
     if (tmp == ceil(tmp)){
         nout = (int) tmp + 1;
     } else { nout = (int) ceil(tmp); }
@@ -106,7 +108,7 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] ){
     r->visualization = REB_VISUALIZATION_NONE; //toggle off visualization
 
 	// Initial conditions
-	for (i=0;i<N;i++){
+	for (i = 0; i < N; i++){
 		struct reb_particle p = {0};
 		p.x  = y0[3*i];     p.y  = y0[3*i+1];	p.z  = y0[3*i+2];
 		p.vx = dy0[3*i]; 	p.vy = dy0[3*i+1];	p.vz = dy0[3*i+2];
@@ -142,10 +144,10 @@ void heartbeat(struct reb_simulation* r){
 
 int stabilitycheck(struct reb_simulation* r) {
 
+    struct reb_particle p0 = r->particles[0];
     struct reb_particle p1 = r->particles[1];
     struct reb_particle p2 = r->particles[2];
-    struct reb_particle p0 = r->particles[3];
-
+    
     struct reb_orbit o1= reb_tools_particle_to_orbit(r->G, p1, p0);
     struct reb_orbit o2= reb_tools_particle_to_orbit(r->G, p2, p0); 
 

@@ -2,8 +2,7 @@
 
 TargetList = {'7 CMa', ['b']};
 Targets = ImportData(TargetList);
-Mexo = 1;
 
-[Stab, a, e, PerStab] = SystemStab(Targets{1}, Mexo);
+[Stab, a, e] = SystemStab(Targets{1});
 
 GeneratePlot(Stab, a, e)

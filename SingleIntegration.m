@@ -32,23 +32,15 @@ ExoTab = struct2table(Exo);
 ExoTab = sortrows(ExoTab, 'a');
 Exo = table2struct(ExoTab)';
 
-[y_in, dy_in, mus] = InitialCond(Exo);      % Calculate system's initial conditions
-
-InitialDist = zeros(1, n);                  % Initialize planets distance from star
-StarInitPos = y_in(end - 2 : end);          % Star intial position
-for i = 1 : n                                          % Iterate over every planet
-    PlanetPos = y_in((3 * i - 2) : 3 * i);             % Planet initial position
-    InitialDist(i) = norm(PlanetPos - StarInitPos);    % Calculate and store planet intial distance from star
-end
+[y_in, dy_in, SysMasses] = InitialCond(Exo);      % Calculate system's initial conditions
 
 dt = min([Exo.per]) / 15;                    % Time step a ninth of the minimum orbital period of the system   
-t_in = [dt; YearsSim * 365; checktime; dtoutput];           % Rebound time parameters   
-%mus = mus ./ G;
+t_in = [dt; YearsSim * YearDays; checktime; dtoutput];           % Rebound time parameters   
 
-[t_out, y_out, dy_out] = reboundmexmod2(t_in, y_in, dy_in, mus); % Run n body integration with rebound
+[t_out, y_out, dy_out] = reboundmexmod3(t_in, y_in, dy_in, SysMasses); % Run n body integration with rebound
 
 
 Stabtime = log10(t_out(end) / YearDays);   
-%Stabtime = 1;
+
 
 end
