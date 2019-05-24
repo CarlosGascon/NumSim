@@ -1,6 +1,7 @@
 %% Script for loading necessary constant values
 
-rng('shuffle')          % shuffle seed for random generation
+% Physical Constants
+
 Msun = 1.98847 * 10^30; % [kg]
 Mearth = 5.972e24;      % [kg]
 Mjup = 1.89813 * 10^27; % [kg]
@@ -18,12 +19,14 @@ r2d = 360 / (2 * pi);   % radians to degrees
 d2r = (2 * pi) / 360;   % degrees to radians
 m2AU = 6.6846e-12;  %[AU]
 
-                 
+ 
+% Simulation Constants
+
+rng('shuffle')          % shuffle seed for random generation                
 checktime = 365e4;               % Indicate checktime
 dtoutput = checktime / 10;       % Indicate dtoutput
-
-Ncases = 1;
 YearsSim = 1e7;
+Nparts = 20; 
 Nexo = 1;
 Ncores = 1;
 N1 = 50;            % Number of semimajor axis points

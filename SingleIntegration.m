@@ -34,7 +34,7 @@ Exo = table2struct(ExoTab)';
 
 [y_in, dy_in, SysMasses] = InitialCond(Exo);      % Calculate system's initial conditions
 
-dt = min([Exo.per]) / 15;                    % Time step a ninth of the minimum orbital period of the system   
+dt = min([Exo.per]) / Nparts;                    % Time step a ninth of the minimum orbital period of the system   
 t_in = [dt; YearsSim * YearDays; checktime; dtoutput];           % Rebound time parameters   
 
 [t_out, y_out, dy_out] = reboundmexmod3(t_in, y_in, dy_in, SysMasses); % Run n body integration with rebound

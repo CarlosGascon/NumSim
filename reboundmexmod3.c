@@ -157,7 +157,7 @@ int stabilitycheck(struct reb_simulation* r) {
 
     double dif = pow(dx * dx + dy * dy + dz * dz, 1.0 / 2);
    
-    double Mhill = ((o2.a + o1.a) / 2) * pow(((p1.m + p2.m) / (3 * p0.m)), (1.0 / 3));
+    double Mhill = ((o2.a + o1.a) / 2.0) * pow(((p1.m + p2.m) / (3.0 * p0.m)), (1.0 / 3));
 
     if (dif < (Mhill / 1.0)) {
         return 0;
