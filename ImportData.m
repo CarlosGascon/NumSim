@@ -45,8 +45,8 @@ for i  = 1 : m                              % Iterate over every system in Targe
                             / (G * (Exoplanet.smass + Exoplanet.pmass))) ; % Calculate orbital period 
         end
         
-        Exoplanet.RAAN = 2 * pi * rand;                         % Set Longitude of ascending node to 0
-        Exoplanet.M0 = 2 * pi * rand;                           % Set Initial Mean Anomaly to 0
+        Exoplanet.RAAN = 2 * pi * rand * 0;                         % Set Longitude of ascending node to 0
+        Exoplanet.M0 = 2 * pi * rand * 0;                           % Set Initial Mean Anomaly to 0
         Exoplanet.T = 0;
         Exoplanet = rmfield(Exoplanet, 'type');     % Remove 'type' field                     
         Targets{i}(j) = Exoplanet;                  % Create struct with target exoplanets

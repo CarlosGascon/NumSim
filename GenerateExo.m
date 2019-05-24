@@ -25,8 +25,8 @@ RandomExo.om = 2 * pi * rand;               % Generate Longitude of periastron
 RandomExo.dist = KnownExo(1).dist;          % Asign star distance
 RandomExo.pmass = m;    %IMPORTANT: LOOK
 
-RandomExo.RAAN = 2 * pi * rand ;             % Generate Longitude of ascending node
-RandomExo.M0 = 2 * pi * rand ;               % Set mean anomaly to 0
+RandomExo.RAAN = 2 * pi * rand * 0;             % Generate Longitude of ascending node
+RandomExo.M0 = 2 * pi * rand * 0;               % Set mean anomaly to 0
 RandomExo.T = 0;     
 
 RandomExo.a = a;

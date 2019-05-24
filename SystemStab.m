@@ -30,14 +30,14 @@ if option == 1
 
         end
         Stab(i, :) = Stabcase;
-
+        1
     end
     
 elseif option == 2
     
-    a = logspace(0.5, 30, N1);
+    a = logspace(log10(0.5), log10(30), N1);
     e = 0.1;
-    y = logspace(0.0033, 130, N2);
+    y = logspace(log10(0.0033), log10(130), N2);
 
     parpool(Ncores);
 
@@ -49,7 +49,7 @@ elseif option == 2
 
         end
         Stab(i, :) = Stabcase;
-
+        1
     end
 end
     
