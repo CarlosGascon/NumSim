@@ -14,7 +14,7 @@ function [Stabtime] = SingleIntegration(KnownExo, a, e, Mexo)
     % - YearsSim: Simulation time in years. 
 
 % Output: 
-    % - Stable: Boolean indicating if the simulated case is stable or not.
+    % - Stabtime: Duration of the simulation.
     
 Constants;            % Load constant values    
 
@@ -22,25 +22,24 @@ m = length(KnownExo); % Number of known exoplanets
 n = m + Nexo;         % Total number of planets (Known and Random)
 
 if Nexo > 0
-    RandomExo = GenerateExo(KnownExo, a, e, Mexo);              % Generate random exoplanet
-    Exo = [KnownExo, RandomExo];                % Create vector containing known and random exoplanet
+    RandomExo = GenerateExo(KnownExo, a, e, Mexo);   % Generate random exoplanet
+    Exo = [KnownExo, RandomExo];                     % Create vector containing known and random exoplanet
 else
     Exo = KnownExo;
 end
 
-ExoTab = struct2table(Exo);
-ExoTab = sortrows(ExoTab, 'a');
-Exo = table2struct(ExoTab)';
+ExoTab = struct2table(Exo);                          % Convert Exoplanet struct to table
+ExoTab = sortrows(ExoTab, 'a');                      % Sort Planet based on the semi-major axis  
+Exo = table2struct(ExoTab)';                         % Convert Exoplanet table to struct
 
-[y_in, dy_in, SysMasses] = InitialCond(Exo);      % Calculate system's initial conditions
-
-dt = min([Exo.per]) / Nparts;                    % Time step a ninth of the minimum orbital period of the system   
-t_in = [dt; YearsSim * YearDays; checktime; dtoutput];           % Rebound time parameters   
+[y_in, dy_in, SysMasses] = InitialCond(Exo);         % Calculate system's initial conditions
+dt = min([Exo.per]) / Nparts;                        % Time step a ninth of the minimum orbital period of the system   
+t_in = [dt; YearsSim * YearDays; checktime; dtoutput];                % Rebound time parameters   
 
 [t_out, y_out, dy_out] = reboundmexmod3(t_in, y_in, dy_in, SysMasses); % Run n body integration with rebound
 
 
-Stabtime = log10(t_out(end) / YearDays);   
+Stabtime = log10(t_out(end) / YearDays);             % Save duration of simulation
 
 
 end

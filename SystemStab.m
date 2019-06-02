@@ -1,6 +1,6 @@
 function [Stab, a, y] = SystemStab(Target, option)
-% Description: The following function evaluates the system's imageable and
-% stable points in a semimajor axis - eccentricity axis. 
+% Description: The following function evaluates the system's stable points
+% in a (a, e) or (a, m) grid. 
 
 % Input:  - Target: Struct array containing the system's exoplanets
 %           information
@@ -10,26 +10,26 @@ function [Stab, a, y] = SystemStab(Target, option)
 %           for every grid point. -1 indicates a non-imageable
 %           point, while 0 refers to a Hill unstable point.
 %         - a and e: Semimajor axis and eccentricity vectors respectively
-%         - PerStab: Percentage of stable orbits
-Constants;
-Stab = zeros(N1, N2);
 
-if option == 1
+Constants;                       % Import constant values
+Stab = zeros(N1, N2);            % Initialize stability matrix
+
+if option == 1                   % Check if option is for (a, e) map
   
-    a = linspace(1, 10, N1);
-    y = linspace(0, 0.5, N2);
-    m = 1;
+    a = linspace(1, 10, N1);     % Create vector of semi-major axis values linearly spaced
+    y = linspace(0, 0.5, N2);    % Create vector of eccentricity values linearly spaced
+    m = 1;                       % Asign fixed value of mass           
 
-    parpool(Ncores);
+    parpool(Ncores);             % Initiate parallel pool, where Ncores is the number of cores
 
-    parfor (i = 1 : N1, Ncores)
-        Stabcase = zeros(1, length(y));
-        for j = 1 : length(y)
+    parfor (i = 1 : N1, Ncores)  % Run Outer parallel for
+        Stabcase = zeros(1, length(y));   % Initiate Stability vector specific iteration
+        for j = 1 : length(y)             % Run Inner for
 
-            Stabcase(j) = SingleIntegration(Target, a(i), y(j), m);
+            Stabcase(j) = SingleIntegration(Target, a(i), y(j), m); % Simulate for specific values of a, e and m
 
         end
-        Stab(i, :) = Stabcase;
+        Stab(i, :) = Stabcase;   % Save stability vector into Stab matrix
         1
     end
     

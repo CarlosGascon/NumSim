@@ -17,21 +17,21 @@ RandomExo.system = KnownExo(1).system;      % Asign system nam
 RandomExo.smass = KnownExo(1).smass;        % Asign system mass
 RandomExo.plet = 'rand';                    % Asign planet letter 'rand' for random
 
-RandomExo.I = acos((2 * rand - 1) * 0);           % Generate inclination
+RandomExo.I = acos((2 * rand - 1) * 0);     % Generate inclination
 
-RandomExo.e = e;                % Generate eccentricity
+RandomExo.e = e;                            % Asign given eccentricity
 
 RandomExo.om = 2 * pi * rand;               % Generate Longitude of periastron
 RandomExo.dist = KnownExo(1).dist;          % Asign star distance
 RandomExo.pmass = m;    %IMPORTANT: LOOK
 
-RandomExo.RAAN = 2 * pi * rand * 0;             % Generate Longitude of ascending node
-RandomExo.M0 = 2 * pi * rand * 0;               % Set mean anomaly to 0
+RandomExo.RAAN = 2 * pi * rand * 0;         % Generate Longitude of ascending node/ fix to 0
+RandomExo.M0 = 2 * pi * rand * 0;           % Generate Mean anomaly/fix to 0
 RandomExo.T = 0;     
 
-RandomExo.a = a;
+RandomExo.a = a;                            % Asign given semi-major axis
 RandomExo.per = 2 * pi * sqrt((RandomExo.a ^ 3) ...             
-                / (G * (RandomExo.smass + RandomExo.pmass))) ;  % Calculate Orbital Period
+                / (G * (RandomExo.smass + RandomExo.pmass))) ;  % Calculate Random's planet Orbital Period
                        
 end
 
