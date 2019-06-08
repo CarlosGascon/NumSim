@@ -18,10 +18,7 @@ function [Stabtime] = SingleIntegration(KnownExo, a, e, Mexo)
     
 Constants;            % Load constant values    
 
-m = length(KnownExo); % Number of known exoplanets
-n = m + Nexo;         % Total number of planets (Known and Random)
-
-if Nexo > 0
+if Nexo == 1                                         % Check if desired number of exoplanets is 1
     RandomExo = GenerateExo(KnownExo, a, e, Mexo);   % Generate random exoplanet
     Exo = [KnownExo, RandomExo];                     % Create vector containing known and random exoplanet
 else
@@ -36,7 +33,7 @@ Exo = table2struct(ExoTab)';                         % Convert Exoplanet table t
 dt = min([Exo.per]) / Nparts;                        % Time step a ninth of the minimum orbital period of the system   
 t_in = [dt; YearsSim * YearDays; checktime; dtoutput];                % Rebound time parameters   
 
-[t_out, y_out, dy_out] = reboundmexmod3(t_in, y_in, dy_in, SysMasses); % Run n body integration with rebound
+[t_out, y_out, dy_out] = reboundmexmod3(t_in, y_in, dy_in, SysMasses); % Run n body integration with rebound package
 
 
 Stabtime = log10(t_out(end) / YearDays);             % Save duration of simulation

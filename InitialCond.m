@@ -17,7 +17,7 @@ mus = SysMasses' * G;                       % Create mus vector
 
 t = 0;                                      % Asign time of initial conditions to 0
 for i = 1 : n                               % Iterate over all exoplanets
-    mu = mus(i + 1) + mus(1);                                                 % Calculate particular mu (exoplanet and star)
+    mu = mus(i + 1) + mus(1);                                               % Calculate particular mu (exoplanet and star)
     ExoInitCond1(i, :) = OE2SV(Exo(i).a, Exo(i).e, Exo(i).I, Exo(i).om, ... % Compute exoplanet initial conditions
                          Exo(i).RAAN, Exo(i).M0, Exo(i).T, mu, t);
 end

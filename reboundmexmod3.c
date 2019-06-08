@@ -98,9 +98,9 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] ){
 	struct reb_simulation* r = reb_create_simulation();
 	// Setup constants
 	r->dt = ts[0];
-	r->G = 2.8245 * pow(10, -7);
-	r->ri_whfast.safe_mode 	= 0;		// Turn off safe mode. Need to call reb_integrator_synchronize() before outputs. 
-	r->ri_whfast.corrector 	= 11;		// 11th order symplectic corrector
+	r->G = 2.8247664 * pow(10, -7);
+	//r->ri_whfast.safe_mode 	= 0;		// Turn off safe mode. Need to call reb_integrator_synchronize() before outputs. 
+	//r->ri_whfast.corrector 	= 11;		// 11th order symplectic corrector
 	//r->integrator		= REB_INTEGRATOR_WHFAST;
     r->integrator		= REB_INTEGRATOR_LEAPFROG;
 	r->heartbeat		= heartbeat;
@@ -134,9 +134,10 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] ){
 
 void heartbeat(struct reb_simulation* r){
 	if (reb_output_check(r, ts[3])){
-        reb_integrator_synchronize(r);
+        //reb_integrator_synchronize(r);
         t[counter] = (double) r->t;
         counter++;
+        // Output position and velocity if needed
     }
 }
 

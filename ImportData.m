@@ -33,21 +33,23 @@ for i  = 1 : m                              % Iterate over every system in Targe
                  & strcmp({Exoplanets.plet}, TargetList{i, 2}(j))==1);       % and planet with correspoding letter
         Exoplanet = Exoplanets(pindex);
         
-        if(isnan(Exoplanet.I))                      % Check if inclination is unknown
-           max = cos(asin((Exoplanet.pmass * Mjup) / (0.08 * Msun)));      % Maximum inclination value considering planet mass below 0.08 sun's Mass
-           Exoplanet.I = acos((2 * rand - 1) * 0.08727 * 0) ;                       % Generate random inclination
+        if(isnan(Exoplanet.I))                                             % Check if inclination is unknown
+           Exoplanet.I = pi / 2;                                           % Asign inclination of pi / 2
            if(Exoplanet.type == 'Msini')                                   % Check if Exoplanet is 'Msini' type
               Exoplanet.pmass =  Exoplanet.pmass / sin(Exoplanet.I);       % Update planet mass
            end
+        end
+        if(isnan(Exoplanet.om))                                            % Check if omega is known
+            Exoplanet.om = 0;                                              % Asign omega of 0 if unknown
         end
         if(isnan(Exoplanet.per))                                           % Check if orbital period is known
             Exoplanet.per = 2 * pi * sqrt((Exoplanet.a ^ 3) ... 
                             / (G * (Exoplanet.smass + Exoplanet.pmass))) ; % Calculate orbital period 
         end
         
-        Exoplanet.RAAN = 2 * pi * rand * 0;                         % Set Longitude of ascending node to 0
-        Exoplanet.M0 = 2 * pi * rand * 0;                           % Set Initial Mean Anomaly to 0
-        Exoplanet.T = 0;
+        Exoplanet.RAAN =  2 * pi * rand * 0;                               % Randomly generate or Fix Longitude of ascending node to 0
+        Exoplanet.M0 =  2 * pi * rand * 0;                                 % Randomly generate or Fix Mean anomaly to 0
+        Exoplanet.T = 0;                                                   % Set initial time to 0
         Exoplanet = rmfield(Exoplanet, 'type');     % Remove 'type' field                     
         Targets{i}(j) = Exoplanet;                  % Create struct with target exoplanets
     end

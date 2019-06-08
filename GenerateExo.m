@@ -17,16 +17,16 @@ RandomExo.system = KnownExo(1).system;      % Asign system nam
 RandomExo.smass = KnownExo(1).smass;        % Asign system mass
 RandomExo.plet = 'rand';                    % Asign planet letter 'rand' for random
 
-RandomExo.I = acos((2 * rand - 1) * 0);     % Generate inclination
+RandomExo.I = acos((2 * rand - 1) * 0);     % Randomly generate or fix to pi / 2 inclination
 
 RandomExo.e = e;                            % Asign given eccentricity
 
 RandomExo.om = 2 * pi * rand;               % Generate Longitude of periastron
 RandomExo.dist = KnownExo(1).dist;          % Asign star distance
-RandomExo.pmass = m;    %IMPORTANT: LOOK
+RandomExo.pmass = m;                        % Asign given planetary mass
 
-RandomExo.RAAN = 2 * pi * rand * 0;         % Generate Longitude of ascending node/ fix to 0
-RandomExo.M0 = 2 * pi * rand * 0;           % Generate Mean anomaly/fix to 0
+RandomExo.RAAN = 2 * pi * rand * 0;         % Randomly generate or Fix Longitude of ascending node to 0
+RandomExo.M0 = 2 * pi * rand * 0;           % Randomly generate or Fix Mean anomaly to 0
 RandomExo.T = 0;     
 
 RandomExo.a = a;                            % Asign given semi-major axis
