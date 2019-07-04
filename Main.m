@@ -33,11 +33,13 @@ GeneratePlot(Stab, a, y)                          % Generate color map. If a and
 
 % 1. Clone the NumSim repository: git clone https://github.com/CarlosGascon/NumSim.git
 % 2. Clone the REBOUND repository: git clone https://github.com/hannorein/rebound.git
-% 3. Enter REBOUND directory and make: cd rebound make
-% 4. Exit REBOUND directory: cd ..
-% 5. Create symbolic link: 	ln -s ./rebound/librebound.so ./NumSim/librebound.so
-% 6. Export library Path: export LD_LIBRARY_PATH=`pwd`'/rebound/src'
-% 7. Run matlab from same terminal: matlab &
-% 8. Generate Matlab executable file by running GenerateMex.m
-% 9. Configure simulation parameters and run Main.m
+% 3. Enter REBOUND directory: cd rebound 
+% 4. Compile REBOUND: make
+% 5. Exit REBOUND directory: cd ..
+% 6. Create symbolic link: 	ln -s ./rebound/librebound.so ./NumSim/librebound.so
+% 7. Export library Path: export LD_LIBRARY_PATH=`pwd`'/rebound/src'
+% 8. Enter NumSim directory: cd NumSim
+% 9. Run matlab from same terminal: matlab &
+% 10. Generate Matlab executable file by running GenerateMex.m
+% 11. Configure simulation parameters and run Main.m
 
