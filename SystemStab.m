@@ -1,7 +1,9 @@
 function [Stab, a, y] = SystemStab(Target, option)
 % Description: The following function calculates the numerical stability
 % grid of the system specified by Target. Integrations are runned in
-% parallel using the number of cores specified by ncores. 
+% parallel using the number of cores specified by Ncores. For each bin, the
+% corresponding two-planet system is integrated via the function
+% SingleIntegration.m
 
 % Input:  - Target: Struct containing the system's exoplanet
 %           information
@@ -9,7 +11,7 @@ function [Stab, a, y] = SystemStab(Target, option)
 %           (a, e) map, 2 for (a, m) map)
 
 % Output: - Stab: Matrix containing the stability time (in log10 years)     
-%           for every grid point
+%           for the grid defined by the arrays a and y
 %         - a and y: Semimajor axis and eccentricity or mass arrays
 %           respectively
 
@@ -26,7 +28,7 @@ if option == 1                   % Check if option is for (a, e) map
   
     a = logspace(log10(2), log10(12), N1);     % Create array of semi-major axis values logarithmically spaced
     y = linspace(0, 0.5, N2);                  % Create array of eccentricity values linearly spaced
-    m = 0.1;                                     % Asign fixed value of mass           
+    m = 0.1;                                   % Asign fixed value of mass           
 
     parpool(Ncores);                      % Initiate parallel pool, where Ncores is the number of cores
 
@@ -52,7 +54,7 @@ elseif option == 2               % Check if option is for (a, m) map
         Stabcase = zeros(1, length(y));           % Initiate stability array specific iteration
         for j = 1 : length(y)                     % Run Inner for
 
-            Stabcase(j) = SingleIntegration(Target, a(i), e, y(j));
+            Stabcase(j) = SingleIntegration(Target, a(i), e, y(j)); % Simulate for specific values of a, e and m
 
         end
         Stab(i, :) = Stabcase;                    % Save stability array into Stab matrix

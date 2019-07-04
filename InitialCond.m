@@ -1,15 +1,18 @@
 function [y_in, dy_in, SysMasses] = InitialCond(Exo)
 % Description: The following function returns the initial position and 
-% velocity of the two exoplanets and star given by Exo, in a reference
-% plane where the origin is the star (the initial conditions are referenced 
-% to the system's center of mass using the REBOUND reb_move_to_com function
-% in the C matlab executable file). 
+% velocity of the two exoplanets and star given by Exo, in heliocentric
+% coordinates. The state vector is calculated from the orbital elements
+% via the function OE2SV.
 
 % Input: - Exo: Array containing structs with exoplanetary information
 
 % Output: - y_in: Array containing initial position in [AU]
 %         - dy_in: Array containing initial velocity in [AU / day]
 %         - SysMasses: Array containing system's mass values in [Mjup]
+
+% Comments: Initial conditions are calculated in heliocentric coordinates
+% but transformed to a centre of mass reference frame using the
+% reb_move_to_com() function in the executable file reboundmex.c
 
 Constants;                                  % Load constant values
 

@@ -2,32 +2,24 @@
 
 % Physical Constants
 
-Msun = 1.98847e30; % [kg]
-Mearth = 5.9723e24;      % [kg]
-Mjup = 1.89819e27; % [kg]
-%Rjup = 0.000477895;     % [AU]
-%Rearth = 6.3781e6;  % [m]
-%Vjup = (4 / 3) * pi * (Rjup^3);  % [AU^3]
-%djup = 1 / Vjup;        % [JupMass / AU^3]
-%p = 0.5;             % Geometric albedo of Jupiter-like planets
-%dmag = 1e-9;           % Maximum DeltaMag value
-G = 2.8247664e-07;         % [AU^3 / (JupMass * days^2)]
-YearDays = 365.2422;         % [days]
-%IWA = 0.1;              % [arcsec]
-%OWA = 0.5;              % [arcsec]
-r2d = 360 / (2 * pi);   % radians to degrees
-d2r = (2 * pi) / 360;   % degrees to radians
-m2AU = 6.684587122e-12;  %[AU]
+Msun = 1.98847e30;              % [kg]
+Mearth = 5.9723e24;             % [kg]
+Mjup = 1.89819e27;              % [kg]
+G = 2.8247664e-07;              % [AU^3 / (JupMass * days^2)]
+YearDays = 365.2422;            % [days]
+r2d = 360 / (2 * pi);           % radians to degrees
+d2r = (2 * pi) / 360;           % degrees to radians
+m2AU = 6.684587122e-12;         %[AU]
 
  
 % Simulation Constants
 
-rng('shuffle')          % shuffle seed for random generation                
+rng('shuffle')                   % shuffle seed for random generation                
 checktime = 365e4;               % Indicate checktime
 dtoutput = checktime / 10;       % Indicate dtoutput
-YearsSim = 1e7;
-Nparts = 20; 
-Nexo = 1;
-Ncores = 1;
-N1 = 50;            % Number of semimajor axis points
-N2 = 50;            % Number of eccentricity points
+YearsSim = 1e9;
+Nparts = 50;                     % Number of parts for time step definition
+Nexo = 1;                        % Number of exoplanets (1 or 0)
+Ncores = 18;                     % Number of cores for parallel pool
+N1 = 70;                         % Number of semimajor axis points
+N2 = 40;                         % Number of eccentricity or mass points

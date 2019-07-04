@@ -12,6 +12,10 @@ function [SV] = OE2SV(a, e, I, om, RAAN, M0, T, mu, t)
     % - SV: Row state vector containing the position (SV(1 : 3)) and
     % velocity (SV(4 : 6)) at the time t. 
 
+% Comment: The eccentric anomaly E is calculated via the function
+% SolveKepler. Nonetheless, given that in this work the mean anomaly has
+% always been considered to be 0, the equation can be trivialy solved. 
+
 
 n = sqrt(mu / (a ^ 3));                                 % Calculate Mean motion
 M = M0 + n * (t - T);                                   % Calculate Mean anomaly for t

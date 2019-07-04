@@ -4,15 +4,16 @@ function [x0] = SolveKepler(M, e)
 % error or tolerance is given by 'tol', and the maximum number of
 % iterations is given by MaxIter. 
 
-% Comment: Given that the mean anomaly has always been set to 0, the
-% solution to the equation is directly 0. In consequence, this function has
-% not essentially been used in the present work. 
-
 % Input:
     % - All: Input is formed by the mean anomaly M in [rad] and the
     % eccentricity e.
 % Output: 
     % - x0: Solution of the equation
+
+% Comment: Given that the mean anomaly has always been set to 0, the
+% solution to the equation is directly 0. In consequence, this function has
+% not essentially been used in the present work and should be improved in
+% the case of arbitrary mean anomalies. 
 
 f = @(x) x - e * sin(x) - M;         % Define zero function
 df = @(x) 1 - e * cos(x);            % Define zero function derivative

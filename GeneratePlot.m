@@ -1,19 +1,20 @@
-function [] = GeneratePlot(Stab, a, e)
+function [] = GeneratePlot(Stab, a, y)
+% Generate plot for the stability map.  A simple example code is presented
+% here. 
 
 figure
-colormap hot;
-surf(a, e, Stab' ,'EdgeColor','None', 'facecolor', 'interp');
-xlim([a(1), a(end)]);
-ylim([e(1), e(end)]);
-view(2); 
+imagesc(a, y, Stab')
+set(gca, 'YDir', 'normal');
+colormap hot
+cbar = colorbar();
+hold on
 
-cbar = colorbar;
-
-set(gca,'TickLabelInterpreter','latex');
-xlabel('a [AU]','Interpreter','latex', 'FontSize', 10);
-ylabel('e','Interpreter','latex', 'FontSize', 10);
-y = ylabel(cbar, '$log_{10}(t)$','Interpreter','latex');
-
+set(gca,'TickLabelInterpreter','latex', 'Fontsize', 9);
+xlabel('a (AU)','Interpreter','latex', 'Fontsize', 10);
+ylabel('e','Interpreter','latex', 'Fontsize', 10);
+set(cbar,'TickLabelInterpreter','latex', 'Fontsize', 9);
+y = ylabel(cbar, 'Lifetime, $\log_{10}\left(\textrm{yr}\right)$','Interpreter','latex', 'Fontsize', 10, 'Rotation', 270);
+y.Position(1) = y.Position(1) + 0.7
 
 end
 

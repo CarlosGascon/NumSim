@@ -1,14 +1,12 @@
 /*
  * [T_OUT,Y_OUT,DY_OUT] = reboundtest1(TS_IN, Y_IN, DY_IN, MUS)
  *
- *      TS_IN   3  x 1 : [dt,tmax, dtoutput]
+ *      TS_IN   4  x 1 : [dt,tmax, checktime, dtoutput]
  *      Y_IN    3n x 1 : initial positions (x1,y1,z1,x2,y2,z2...)
  *      DY_IN   3n x 1 : initial velocities (dx1,dy1,dz1,dx2,dy2,dz2...)
- *      MUS     n  x 1 : Gravitational paramters (mu1,mu2,mu3...)
+ *      MUS     n  x 1 : System Masses (mu1,mu2,mu3...)
  *
  *
- * Compile call: mex -v -IreboundPath/rebound/src -LreboundPath/rebound/src -lrebound reboundmex.c
- * mex -v -I/Users/ds264/Documents/gitrepos/rebound/src -L/Users/ds264/Documents/gitrepos/rebound/src -lrebound reboundmex.c
  *
  */
 
@@ -37,8 +35,8 @@ int stabilitycheck(struct reb_simulation* r);
 int i, N, counter, nout;
 double *ts, *t, *y, *dy;
 double timer;
-int maxdist = 250;
-double mindist = 0.005;
+int maxdist = 250;            // Define escape distance in [AU]
+double mindist = 0.005;       // Define collision with the star distance in [AU]
 
 void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] ){
     
@@ -98,10 +96,10 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] ){
 	struct reb_simulation* r = reb_create_simulation();
 	// Setup constants
 	r->dt = ts[0];
-	r->G = 2.8247664 * pow(10, -7);
-	//r->ri_whfast.safe_mode 	= 0;		// Turn off safe mode. Need to call reb_integrator_synchronize() before outputs. 
-	//r->ri_whfast.corrector 	= 11;		// 11th order symplectic corrector
-	//r->integrator		= REB_INTEGRATOR_WHFAST;
+	r->G = 2.8247664 * pow(10, -7);         // If G = 1, the mus should be the gravitational parameter.
+	//r->ri_whfast.safe_mode 	= 0;		// Turn off safe mode. Need to call reb_integrator_synchronize() before outputs. (if WHFAST is used)
+	//r->ri_whfast.corrector 	= 11;		// 11th order symplectic corrector (if WHFAST is used)
+	//r->integrator		= REB_INTEGRATOR_WHFAST; (if WHFAST is used)
     r->integrator		= REB_INTEGRATOR_LEAPFROG;
 	r->heartbeat		= heartbeat;
 	r->exact_finish_time = 1; // Finish exactly at tmax in reb_integrate(). Default is already 1.
@@ -116,7 +114,7 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] ){
 		reb_add(r, p); 
 	}
 
-
+    // Move particles to center of mass reference frame
 	reb_move_to_com(r);
 
     int stab = 1;
@@ -134,7 +132,7 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray*prhs[] ){
 
 void heartbeat(struct reb_simulation* r){
 	if (reb_output_check(r, ts[3])){
-        //reb_integrator_synchronize(r);
+        //reb_integrator_synchronize(r); (if WHFAST is used)
         t[counter] = (double) r->t;
         counter++;
         // Output position and velocity if needed
@@ -142,7 +140,7 @@ void heartbeat(struct reb_simulation* r){
 }
 
 
-
+// Function for performing the stability check when required
 int stabilitycheck(struct reb_simulation* r) {
 
     struct reb_particle p0 = r->particles[0];

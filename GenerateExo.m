@@ -18,7 +18,7 @@ RandomExo.system = KnownExo(1).system;      % Asign system nam
 RandomExo.smass = KnownExo(1).smass;        % Asign system mass
 RandomExo.plet = 'rand';                    % Asign planet letter 'rand' for random
 
-RandomExo.I = acos((2 * rand - 1) * 0);     % Randomly generate  (or fix to pi / 2) inclination
+RandomExo.I = acos((2 * rand - 1) * 0);     % Randomly generate (or fix to pi / 2) inclination
 
 RandomExo.e = e;                            % Asign given eccentricity
 

@@ -19,6 +19,10 @@ function [Targets] = ImportData(TargetList)
     % If orbit inclination is unknown, it is generated, and planet mass is
     % updated if necessary. 
 
+% Comments: Although this function was originally written for multiple
+% targets and planets, the rest of the code was simplyfied to one system 
+% with one planet. 
+
 % References: 
     % This function makes use of the NASA Exoplanet Archive, which is 
     % operated by the California Institute of Technology, under contract 
@@ -29,7 +33,7 @@ if ~isfile('Exoplanets.mat')    % Check if the Exoplanets file exists
     ImportPlanets;              % Create Exoplanet file
 end     
 
-Constants; 
+Constants;                      % Load constant values
 load('Exoplanets.mat')          % Load Exoplanets.mat
 [m, ~] = size(TargetList);      % Read TargetList size
 

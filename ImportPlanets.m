@@ -6,6 +6,12 @@
 % through the script. Exoplanets whose semimajor axis, eccentricty,
 % star distance or mass is unknown, are discarded.
 
+% Comments: If a new planets.csv file needs to be created, please follow
+% the following steps:
+%   1. Go to https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=planets
+%   2. Filter and check desired rows and columns
+%   3. Download table with the following options: CSV format and Values only (no errors, limits, etc.)
+
 % References: 
     % This function makes use of the NASA Exoplanet Archive, which is 
     % operated by the California Institute of Technology, under contract 
@@ -43,4 +49,4 @@ for i = 1 : length(P)
     end
     
 end
-save('Exoplanets', 'Exoplanets');
+save('Exoplanets', 'Exoplanets');                   % Save Exoplanets.mat file 
