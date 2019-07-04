@@ -4,7 +4,13 @@
 % exoplanets from an external file ('planets.csv'). The data for each 
 % exoplanet is saved as a struct formed by the different fields described 
 % through the script. Exoplanets whose semimajor axis, eccentricty,
-% longitude of periastron, star distance or mass is unknown, are discarded.
+% star distance or mass is unknown, are discarded.
+
+% References: 
+    % This function makes use of the NASA Exoplanet Archive, which is 
+    % operated by the California Institute of Technology, under contract 
+    % with the National Aeronautics and Space Administration under the 
+    % Exoplanet Exploration Program.
 
 Constants;                    % Import constant values needed
 P = readtable('planets.csv'); % Read external file 'planets.csv'

@@ -8,7 +8,8 @@ function [Targets] = ImportData(TargetList)
     % - TargetList: Should be formed by m rows, where m is the number of
     % systems to be analyzed. The first column of each row should contain 
     % the system name, while the second column should specify which planets
-    % of the system will be considered. 
+    % of the system will be considered.
+    
 % Output: 
     % - Targets: Cell Array formed by m cells, one for each system, 
     % cointaining the information from the exoplanets specified in TargetList.
@@ -17,6 +18,12 @@ function [Targets] = ImportData(TargetList)
     % 'Exoplanets.mat' file, except for the 'type' field, which is removed.
     % If orbit inclination is unknown, it is generated, and planet mass is
     % updated if necessary. 
+
+% References: 
+    % This function makes use of the NASA Exoplanet Archive, which is 
+    % operated by the California Institute of Technology, under contract 
+    % with the National Aeronautics and Space Administration under the 
+    % Exoplanet Exploration Program.
     
 if ~isfile('Exoplanets.mat')    % Check if the Exoplanets file exists
     ImportPlanets;              % Create Exoplanet file

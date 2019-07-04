@@ -4,7 +4,7 @@ function [SV] = OE2SV(a, e, I, om, RAAN, M0, T, mu, t)
 
 % Input: 
     % - All: Function inputs are semimajor axis(a), eccentricity(e), 
-    % inclination(I), longitude of periastron(om), right ascension of 
+    % inclination(I), argument of periastron(om), right ascension of 
     % ascending node(RAAN), mean anomaly (M0) at a time T, gravitational 
     % parameter mu and time t. 
 
@@ -16,8 +16,7 @@ function [SV] = OE2SV(a, e, I, om, RAAN, M0, T, mu, t)
 n = sqrt(mu / (a ^ 3));                                 % Calculate Mean motion
 M = M0 + n * (t - T);                                   % Calculate Mean anomaly for t
 
-%E = M+(e-0.125*(e^3))*sin(M)+0.5*(e^2)*sin(2*M)+0.375*(e^3)*sin(3*M);
-E = SolveKepler(M, e);                                     % Solve Kepler Equation with Newton-Raphson
+E = SolveKepler(M, e);                                  % Solve Kepler Equation with Newton-Raphson 
 
 nu = 2 * atan(sqrt((1 + e) / (1 - e)) * tan(E / 2));    % Calculate true anomaly from eccentric anomaly
 

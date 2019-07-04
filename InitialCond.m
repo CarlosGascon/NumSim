@@ -1,11 +1,15 @@
 function [y_in, dy_in, SysMasses] = InitialCond(Exo)
 % Description: The following function returns the initial position and 
-% velocity of the exoplanets and star contained in 'Exo', in a reference
-% plane where the origin is the system's center of mass. 
+% velocity of the two exoplanets and star given by Exo, in a reference
+% plane where the origin is the star (the initial conditions are referenced 
+% to the system's center of mass using the REBOUND reb_move_to_com function
+% in the C matlab executable file). 
 
-% Input: 
+% Input: - Exo: Array containing structs with exoplanetary information
 
-% Output: 
+% Output: - y_in: Array containing initial position in [AU]
+%         - dy_in: Array containing initial velocity in [AU / day]
+%         - SysMasses: Array containing system's mass values in [Mjup]
 
 Constants;                                  % Load constant values
 
@@ -22,13 +26,13 @@ for i = 1 : n                               % Iterate over all exoplanets
                          Exo(i).RAAN, Exo(i).M0, Exo(i).T, mu, t);
 end
 
-SysInitPos1 = [zeros(1, 3); ExoInitCond1(:, 1 : 3)];                        % Create System Inital position matrix in reference 1                                                           % Calculate center of mass velocity in reference 1
-SysInitVel1 = [zeros(1, 3); ExoInitCond1(:, 4 : 6)];                        % Create system Inital velocity matrix in reference 1
+SysInitPos1 = [zeros(1, 3); ExoInitCond1(:, 1 : 3)];                        % Create System Inital position array                                                         
+SysInitVel1 = [zeros(1, 3); ExoInitCond1(:, 4 : 6)];                        % Create system Inital velocity array
                           
-y_in = zeros(3 * (n + 1), 1);
-dy_in = zeros(3 * (n + 1), 1);
+y_in = zeros(3 * (n + 1), 1);                                               % Initialize output array
+dy_in = zeros(3 * (n + 1), 1);                                              % Initialize output array
 
-for i = 1 : (n + 1)
+for i = 1 : (n + 1)                                                         % Rearrange values for output
     y_in(3 * i - 2 : 3 * i, 1) = SysInitPos1(i, :)';
     dy_in(3 * i - 2 : 3 * i, 1) = SysInitVel1(i, :)';
 end

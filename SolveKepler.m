@@ -1,11 +1,15 @@
 function [x0] = SolveKepler(M, e)
 % Description: The following function solves the kepler equation for the
 % values of mean motion M and eccentricity e given. The minimum relative
-% error or tolerane is fixed by 'tol', and the maximum number of
-% interations is given by MaxIter. 
+% error or tolerance is given by 'tol', and the maximum number of
+% iterations is given by MaxIter. 
+
+% Comment: Given that the mean anomaly has always been set to 0, the
+% solution to the equation is directly 0. In consequence, this function has
+% not essentially been used in the present work. 
 
 % Input:
-    % - All: Input is formed by the mean anomaly M in radians and the
+    % - All: Input is formed by the mean anomaly M in [rad] and the
     % eccentricity e.
 % Output: 
     % - x0: Solution of the equation

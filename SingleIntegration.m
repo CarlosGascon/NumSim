@@ -1,22 +1,28 @@
 function [Stabtime] = SingleIntegration(KnownExo, a, e, Mexo)
-% Description: The following function performs one simulation for a
-% specific system. Reading the information from the known exoplanets of the
-% particular system, a new random exoplanet is generated. The entire system
-% is then integrated over the period of time specified by 'YearsSim'. While
-% integrating, after a period of time determined by 'checktime', the
-% stability conditions are checked. Depending on the result, the
-% integration continues or ends. 
+% Description: Given a the known exoplanet's information, an additional
+% exoplanet with semi-major axis a, eccentricity e and mass Mexo is 
+% generated. The resultant system is then integrated over the period of time 
+% specified by 'YearsSim'. While integrating, after a period of time 
+% determined by 'checktime', the stability conditions are checked. 
+% Depending on the result, the integration continues or ends. Integrations 
+% are performed using a Matlab executable file based on the Leapfrog
+% integrator implemented in the REBOUND package.
 
 % Input: 
-    % - KnownExo: Array formed by the exoplanets contained in the system  
-    % analyzed and specified in TargetList. Each array element consists
-    % of an exoplanet struct. 
-    % - YearsSim: Simulation time in years. 
+    % - KnownExo: Struct containing the information of the known exoplanet 
+    % - a: Semi-major axis of the additional planet in [AU]
+    % - e: Eccentricity of the additional planet
+    % - Mexo: Mass of the additional planet in [Mjup]
 
 % Output: 
-    % - Stabtime: Duration of the simulation.
+    % - Stabtime: Lifetime of the simulation
     
-Constants;            % Load constant values    
+% References: 
+
+% - [1] Rein, H. and Liu, S.-F. (2012). Rebound: an open-source multi-purpose n-body code for collisional dynamics.
+%       Astronomy & Astrophysics, 537:A128.
+    
+Constants;                                           % Load constant values    
 
 if Nexo == 1                                         % Check if desired number of exoplanets is 1
     RandomExo = GenerateExo(KnownExo, a, e, Mexo);   % Generate random exoplanet
@@ -29,11 +35,11 @@ ExoTab = struct2table(Exo);                          % Convert Exoplanet struct 
 ExoTab = sortrows(ExoTab, 'a');                      % Sort Planet based on the semi-major axis  
 Exo = table2struct(ExoTab)';                         % Convert Exoplanet table to struct
 
-[y_in, dy_in, SysMasses] = InitialCond(Exo);         % Calculate system's initial conditions
-dt = min([Exo.per]) / Nparts;                        % Time step a ninth of the minimum orbital period of the system   
-t_in = [dt; YearsSim * YearDays; checktime; dtoutput];                % Rebound time parameters   
+[y_in, dy_in, SysMasses] = InitialCond(Exo);              % Calculate system's initial conditions
+dt = min([Exo.per]) / Nparts;                             % Time step fixed as T1 / Nparts, where T1 is the period of the innermost planet in [days]
+t_in = [dt; YearsSim * YearDays; checktime; dtoutput];    % Array of time parameters: [TimeStep, Simulation duration, checktime, output interval] in [days]   
 
-[t_out, y_out, dy_out] = reboundmexmod3(t_in, y_in, dy_in, SysMasses); % Run n body integration with rebound package
+[t_out, y_out, dy_out] = reboundmex(t_in, y_in, dy_in, SysMasses); % Run integration with matlab executable file written in C
 
 
 Stabtime = log10(t_out(end) / YearDays);             % Save duration of simulation
